@@ -1,0 +1,91 @@
+{% extends "bootstrap.html" %}
+{% from "_render_field.html" import active %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename="main.css") }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+{% endblock %}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <link rel="stylesheet" type="text/css" href={{url_for('static', filename='main.css') }}>#}
+{#    <title>#}
+{#        {% block title %} Homepage {% endblock %} - MyApp#}
+{#    </title>#}
+{#</head>#}
+{##}
+{% block navlinks %}
+    <li class="nav-item">
+        <a class="nav-link {{ home_state }}" href="{{ url_for('main.index') }}">Home <span class="sr-only">(current)</span></a>
+    </li>
+
+    {% if current_user.is_anonymous %}
+        <li class="nav-item {{ login_state }}">
+            <a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
+        </li>
+        <li class="nav-item {{ register_state }}">
+            <a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+        </li>
+    {% else %}
+        <li class="nav-item {{ preferences_state }}">
+            <a class="nav-link" href="{{ url_for('users.preferences') }}">Preferences</a>
+        </li>
+        <li class="nav-item {{ logout_state }}">
+            <a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+        </li>
+    {% endif %}
+
+{% endblock %}
+
+
+
+{% block content %}
+    <p>Hi there</p>
+{% endblock %}
+{##}
+{#<body>#}
+{#<h1> My app </h1>#}
+{##}
+{#<ul>#}
+{#    <li> <a href="{{ url_for('main.index') }}">Homepage</a></li>#}
+{#    {% if current_user.is_anonymous %}#}
+{#        <li> <a href="{{ url_for('users.login') }}">Login</a></li>#}
+{#        <li> <a href="{{ url_for('users.register') }}">Register</a></li>#}
+{##}
+{#    {%  else %}#}
+{#        <li> <a href="{{ url_for('users.preferences') }}">Preferences</a></li>#}
+{#        <li> <a href="{{ url_for('users.logout') }}">Logout</a></li>#}
+{##}
+{#    {% endif %}#}
+{#</ul>#}
+{##}
+{#<hr>#}
+{##}
+{#<div id="success">#}
+{#{% with messages = get_flashed_messages() %}#}
+{#  {% if messages %}#}
+{#    <ul class=flashes>#}
+{#    {% for message in messages %}#}
+{#      <li>{{ message }}</li>#}
+{#    {% endfor %}#}
+{#    {% block alerts %} {% endblock %}#}
+{#    </ul>#}
+{#  {% endif %}#}
+{#{% endwith %}#}
+{##}
+{#</div>#}
+{##}
+{##}
+{#<div id="content">#}
+{##}
+{#{% block content %}#}
+{##}
+{#{% endblock %}#}
+{##}
+{#</div>#}
+{##}
+{#</body>#}
+{#</html>#}

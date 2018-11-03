@@ -1,0 +1,9 @@
+Hi {{user.full_name}},
+
+Welcome to FlaskApp,
+
+Someone has registered an account at FlaskApp using this email address. Please click the link below to verify your ownership of this email address.
+
+{{ url_for('users.verify_email', token=token, _external=True) }}
+
+If you did not request to reset your password, simply ignore this message.

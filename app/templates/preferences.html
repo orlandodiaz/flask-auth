@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% from "_render_field.html" import render_field %}
+
+{% set preferences_state= 'active' %}
+
+{% block title %} Preferences {% endblock %}
+{% block content %}
+
+    <h4> Preferences </h4>
+    <br>
+    {% block alerts %}
+        {% if not current_user.is_verified %}
+
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <!-- <strong>Title</strong> --> Your email is not verified. Please click <a href="{{ url_for('users.request_verify_email') }}">here</a>  to
+            request a verification email
+            </div>
+
+        {% endif %}
+
+    {% endblock alerts %}
+
+    <form action="" method="post">
+
+        {{ form.csrf_token }}
+
+        {{ render_field(form.username) }}
+        {{ render_field(form.full_name) }}
+        {{ render_field(form.email) }}
+
+        <p>{{ form.submit_info(class="btn btn-danger btn-md") }}</p>
+
+    </form>
+
+    <hr>
+
+    <form action="" method="post">
+
+        <h4> Change your password </h4>
+        <br>
+
+        {{ pw_form.csrf_token }}
+
+        {{ render_field(pw_form.password) }}
+        {{ render_field(pw_form.password2) }}
+
+        <p>{{ pw_form.submit_password(class="btn btn-danger btn-md") }}</p>
+
+    </form>
+
+{% endblock %}

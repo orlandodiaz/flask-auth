@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_render_field.html" import render_field %}
+{% from "_render_field.html" import active %}
+
+{% block title %} Register {% endblock %}
+{#{% block active %} {{active }} {% endblock %}#}
+
+{% set register_state= 'active' %}
+
+{% block content %}
+
+    <h2> Register </h2>
+    <form action="" method="post">
+
+        {{ form.csrf_token }}
+
+        {{ render_field(form.username) }}
+        {{ render_field(form.full_name) }}
+        {{ render_field(form.email) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.password2) }}
+
+
+        <p>{{form.submit(class="btn btn-primary btn-md")}}</p>
+    </form>
+
+{% endblock %}
