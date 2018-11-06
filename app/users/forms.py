@@ -40,10 +40,7 @@ class PasswordForm(FlaskForm):
     submit_password = SubmitField()
 
 
-
-
 class PasswordResetForm(FlaskForm):
-
     password = PasswordField(validators=[DataRequired()])
 
     password2 = PasswordField('Repeat your password',
