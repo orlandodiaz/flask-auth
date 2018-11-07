@@ -1,7 +1,7 @@
-from app import mail
+from myproject import mail
 from flask_mail import Message
 from threading import Thread
-from app import app
+from myproject import app
 
 def send_email(app, msg):
     with app.app_context():

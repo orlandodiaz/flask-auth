@@ -1,12 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
-from app import app
+from myproject import app
 from flask_login import UserMixin
-from app import login_manager
+from myproject import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import db
+from myproject import db
 import jwt
 from time import time
-from app.users.email import threaded_email_send
+from myproject.users.email import threaded_email_send
 from flask_mail import Message
 from flask import render_template
 

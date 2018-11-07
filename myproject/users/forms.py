@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, EqualTo, Email, Length
-from app.users.models import User
+from myproject.users.models import User
 
 
 class PreferencesForm(FlaskForm):

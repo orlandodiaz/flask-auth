@@ -20,8 +20,8 @@ login_manager.init_app(app)
 migrate = Migrate(app, db)
 
 
-from app.main.routes import main
-from app.users.routes import users
+from myproject.main.routes import main
+from myproject.users.routes import users
 
 
 

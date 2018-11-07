@@ -1,17 +1,17 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from app.users.forms import (RegisterForm, LoginForm, RequestPasswordResetForm,
-                             PasswordResetForm, PreferencesForm, PasswordForm)
+from myproject.users.forms import (RegisterForm, LoginForm, RequestPasswordResetForm,
+                                   PasswordResetForm, PreferencesForm, PasswordForm)
 from flask_login import login_user, logout_user
-from app import db
+from myproject import db
 from flask_mail import Message
-from app import mail
-from app.users.models import User
-from app.users.email import threaded_email_send
+from myproject import mail
+from myproject.users.models import User
+from myproject.users.email import threaded_email_send
 from flask_login import current_user
-from app import app
-from app.users import alert
-users = Blueprint('users', __name__)
-
+from myproject import app
+from myproject.users import alert
+users = Blueprint('users', __name__, url_prefix='/users')
+print(f'NAME IS ${__name__}')
 
 
 @users.route('/request_verify_email', methods=['GET', 'POST'])
