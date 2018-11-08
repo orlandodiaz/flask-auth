@@ -12,16 +12,16 @@ class PreferencesForm(FlaskForm):
     email = StringField(validators=[DataRequired(), Email()])
     submit_info = SubmitField()
 
-    @property
-    def is_prefilled(self):
-        return self.username.data and self.full_name.data and self.email.data
-
-    def prefill(self, user):
-        """ Prefills preferences form from passed user object"""
-        print('prefilling')
-        self.username.data = user.username
-        self.full_name.data = user.full_name
-        self.email.data = user.email
+    # @property
+    # def is_prefilled(self):
+    #     return self.username.data and self.full_name.data and self.email.data
+    #
+    # def prefill(self, user):
+    #     """ Prefills preferences form from passed user object"""
+    #     print('prefilling')
+    #     self.username.data = user.username
+    #     self.full_name.data = user.full_name
+    #     self.email.data = user.email
 
     # def __init__(self, user, *args, **kwargs):
     #     super(PreferencesForm, self).__init__(*args, **kwargs)
