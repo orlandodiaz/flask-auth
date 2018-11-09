@@ -19,14 +19,27 @@ login_manager.init_app(app)
 
 migrate = Migrate(app, db)
 
+from .users.models import User
+
+from flask_admin import Admin
+
+
+from myproject.admin.views import AdminView
+from myproject.admin.views import MyAdminIndexView
+
+admin_page = Admin(app, name='Admin page',
+                   template_mode='bootstrap3',
+                   index_view=MyAdminIndexView())
+
+admin_page.add_view(AdminView(User, db.session))
 
 from myproject.main.views import main
 from myproject.users.views import users
-
+from myproject.admin.views import admin1
 
 
 app.register_blueprint(main)
 app.register_blueprint(users)
-
+app.register_blueprint(admin1)
 
 
