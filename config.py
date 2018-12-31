@@ -2,21 +2,28 @@ import os
 
 
 class Config(object):
-    pass
+    """ Default configuration for production and development"""
+
+    DEBUG = False
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
     
 class ProdConfig(Config):
+    """ Configuration for production settings """
+
     DEBUG = False
-    SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
 class DevConfig(Config):
+    """ Configuration for development  """
+
     DEBUG = True
-    SECRET_KEY = os.environ.get('SECRET_KEY')
 
     # Database settings
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/test.db'
+
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_postgres.db'
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_sqlite.db'
 
     # Mailing settings
     MAIL_SERVER = "smtp.googlemail.com"
@@ -29,6 +36,7 @@ class DevConfig(Config):
 
 
 class TestConfig(Config):
+    """ Configuration for testing """
     TESTING = True
 
     # Use an in-memory SQLITE database
