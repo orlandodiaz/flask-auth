@@ -7,7 +7,7 @@ from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
-app.config.from_object(DevConfig)
+app.config.from_object(ProdConfig)
 
 mail = Mail(app)
 db = SQLAlchemy(app)
