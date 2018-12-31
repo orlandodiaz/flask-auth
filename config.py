@@ -7,6 +7,15 @@ class Config(object):
     DEBUG = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
+    # Mailing settings
+    MAIL_SERVER = "smtp.googlemail.com"
+    MAIL_PORT = 587
+    MAIL_USE_TLS = 1
+
+    MAIL_USERNAME = os.environ.get('FLASK_MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('FLASK_MAIL_PASSWORD')
+    MAIL_DEFAULT_SENDER = os.environ.get('FLASK_DEFAULT_SENDER')
+
     
 class ProdConfig(Config):
     """ Configuration for production settings """
@@ -24,15 +33,6 @@ class DevConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_postgres.db'
     # SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_sqlite.db'
-
-    # Mailing settings
-    MAIL_SERVER = "smtp.googlemail.com"
-    MAIL_PORT = 587
-    MAIL_USE_TLS = 1
-
-    MAIL_USERNAME = os.environ.get('FLASK_MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('FLASK_MAIL_PASSWORD')
-    MAIL_DEFAULT_SENDER = os.environ.get('FLASK_DEFAULT_SENDER')
 
 
 class TestConfig(Config):
