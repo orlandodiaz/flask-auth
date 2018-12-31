@@ -6,7 +6,8 @@ class Config(object):
 
     
 class ProdConfig(Config):
-    pass
+    DEBUG = False
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 class DevConfig(Config):
