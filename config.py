@@ -4,7 +4,7 @@ import os
 class Config(object):
     """ Default configuration for production and development"""
 
-    DEBUG = False
+    DEBUG = True
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
     # Mailing settings
@@ -33,6 +33,16 @@ class DevConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_postgres.db'
     # SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_sqlite.db'
+
+    POSTGRES = {
+        'user': 'orr',
+        'pw': '',
+        'db': 'flaskauth',
+        'host': 'localhost',
+        'port': '5432',
+    }
+    SQLALCHEMY_DATABASE_URI= 'postgresql://%(user)s:\
+    %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
 
 class TestConfig(Config):
