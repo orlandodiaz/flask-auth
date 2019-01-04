@@ -16,7 +16,6 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('FLASK_MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.environ.get('FLASK_DEFAULT_SENDER')
 
-    
 class ProdConfig(Config):
     """ Configuration for production settings """
 
@@ -34,7 +33,7 @@ class DevConfig(Config):
 
     # Database settings
 
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_postgres.db'
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_postgres.db'
     # SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev_sqlite.db'
 
     POSTGRES = {
