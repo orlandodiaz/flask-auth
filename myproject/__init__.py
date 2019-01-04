@@ -5,10 +5,12 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
+import os
+
 
 app = Flask(__name__)
-app.config.from_object(ProdConfig)
-#app.config.from_object('config.DevConfig')
+app.config.from_object(os.environ.get('FLASK_CONFIG_TYPE'))
+# app.config.from_object('config.DevConfig')
 
 mail = Mail(app)
 db = SQLAlchemy(app)
