@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from myproject.users.forms import (RegisterForm, LoginForm, RequestPasswordResetForm,
                                    PasswordResetForm, PreferencesForm, PasswordForm)
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 from myproject import db
 from flask_mail import Message
 from myproject import mail
@@ -10,6 +10,7 @@ from myproject.users.email import threaded_email_send
 from flask_login import current_user
 from myproject import app
 from myproject.users import alert
+from flask import request
 users = Blueprint('users', __name__, url_prefix='/users')
 print(f'NAME IS ${__name__}')
 
@@ -22,6 +23,7 @@ def request_verify_email():
 
 
 @users.route('/preferences', methods=['GET', 'POST'])
+@login_required
 def preferences():
     form = PreferencesForm()
     if not form.is_prefilled:
@@ -50,11 +52,11 @@ def preferences():
 
         return redirect(url_for('users.preferences'))
 
-
     return render_template('preferences.html', form=form, pw_form=pw_form)
 
-
 @users.route('/profile')
+@login_required
+
 def profile():
     return render_template('profile.html')
 
@@ -121,16 +123,22 @@ def request_password_reset():
 def login():
     form = LoginForm()
 
+
     if form.validate_on_submit():
         print("Login Form validated")
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(username=request.form['username']).first()
         if user:
-            if user.check_password(form.password.data):
+            print("request.form['password']", request.form['password'])
+            if user.check_password(request.form['password']):
                 print(form.remember_me.data)
+                print(request.cookies)
                 login_user(user, remember=form.remember_me.data)
-                # flash('Successful login')
+                alert.info('Successful login')
 
-                return redirect(url_for('main.index'))
+                if request.args.get('next'):
+                    return redirect(request.args.get('next'))
+                else:
+                    return redirect(url_for('main.index'))
             # flash('Incorrect password', category='danger')
             alert.error("Incorrect Password")
 
@@ -139,7 +147,12 @@ def login():
 
         # return redirect(url_for('main.index'))
 
+
+    alert.info("Welcome! This is a back-end authentication demo. \n Register an account to begin or you could"
+               " also login with the username demo with password demo123")
+
     return render_template("login.html", form=form)
+
 
 
 @users.route('/logout', methods=['GET', 'POST'])
