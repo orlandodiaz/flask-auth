@@ -16,10 +16,11 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('FLASK_MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.environ.get('FLASK_DEFAULT_SENDER')
 
+
 class ProdConfig(Config):
     """ Configuration for production settings """
 
-    ENV="production"
+    ENV = "production"
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
@@ -28,8 +29,7 @@ class DevConfig(Config):
     """ Configuration for development  """
 
     DEBUG = True
-    ENV="development"
-
+    ENV = "development"
 
     # Database settings
 
@@ -43,7 +43,7 @@ class DevConfig(Config):
         'host': 'localhost',
         'port': '5432',
     }
-    SQLALCHEMY_DATABASE_URI= 'postgresql://%(user)s:\
+    SQLALCHEMY_DATABASE_URI = 'postgresql://%(user)s:\
     %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
 
@@ -51,6 +51,7 @@ class TestConfig(Config):
     """ Configuration for testing """
     TESTING = True
 
+    WTF_CSRF_ENABLED = False
+
     # Use an in-memory SQLITE database
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
-
