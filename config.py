@@ -17,12 +17,14 @@ class Config(object):
     MAIL_DEFAULT_SENDER = os.environ.get('FLASK_DEFAULT_SENDER')
 
 
-class ProdConfig(Config):
-    """ Configuration for production settings """
+class TestConfig(Config):
+    """ Configuration for testing """
+    TESTING = True
 
-    ENV = "production"
-    DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    WTF_CSRF_ENABLED = False
+
+    # Use an in-memory SQLITE database
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
 
 
 class DevConfig(Config):
@@ -47,11 +49,16 @@ class DevConfig(Config):
     %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
 
-class TestConfig(Config):
-    """ Configuration for testing """
-    TESTING = True
+class StagingConfig(config):
+    """ Configuration for staging """
+    ENV = "staging"
+    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('STAGING_DATABASE_URL')
 
-    WTF_CSRF_ENABLED = False
 
-    # Use an in-memory SQLITE database
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+class ProdConfig(Config):
+    """ Configuration for production settings """
+
+    ENV = "production"
+    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
