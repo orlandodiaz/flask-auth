@@ -49,7 +49,7 @@ class DevConfig(Config):
     %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 
 
-class StagingConfig(config):
+class StagingConfig(Config):
     """ Configuration for staging """
     ENV = "staging"
     DEBUG = False
