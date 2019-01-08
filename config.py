@@ -8,8 +8,8 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
     # Mailing settings
-    MAIL_SERVER = "smtp.googlemail.com"
-    MAIL_PORT = 587
+    MAIL_SERVER = "mail.privateemail.com"
+    MAIL_PORT = 143
     MAIL_USE_TLS = 1
 
     MAIL_USERNAME = os.environ.get('FLASK_MAIL_USERNAME')
