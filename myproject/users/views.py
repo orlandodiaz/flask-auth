@@ -18,7 +18,7 @@ print(f'NAME IS ${__name__}')
 @users.route('/request_verify_email', methods=['GET', 'POST'])
 def request_verify_email():
     current_user.send_verification_email()
-    alert.info('A verification email has been to the email address specified')
+    alert.info('A verification email has been sent to the email address specified')
     return redirect(url_for('users.preferences'))
 
 
@@ -113,7 +113,7 @@ def request_password_reset():
             token = user.get_reset_password_token()
             msg = Message("Complete the registration process",
                           recipients=[user.email],
-                          body=render_template('email/reset_pasword.txt', user=user, token=token))
+                          body=render_template('email/reset_password.txt', user=user, token=token))
             threaded_email_send(msg)
             alert.info("Email with instructions have been sent to {}. Please check your e-mail.".format(form.email.data))
             return redirect(url_for('users.login'))
