@@ -43,6 +43,9 @@
 
         {{ pw_form.csrf_token }}
 
+        {{ render_field(pw_form.current_password) }}
+
+
         {{ render_field(pw_form.password) }}
         {{ render_field(pw_form.password2) }}
 
