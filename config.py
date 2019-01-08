@@ -9,7 +9,7 @@ class Config(object):
 
     # Mailing settings
     MAIL_SERVER = "mail.privateemail.com"
-    MAIL_PORT = 143
+    MAIL_PORT = 587
     MAIL_USE_TLS = 1
 
     MAIL_USERNAME = os.environ.get('FLASK_MAIL_USERNAME')
