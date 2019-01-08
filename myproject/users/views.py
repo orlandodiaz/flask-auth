@@ -111,7 +111,7 @@ def request_password_reset():
         print("user {}".format(user))
         if user:
             token = user.get_reset_password_token()
-            msg = Message("Complete the registration process",
+            msg = Message("Reset Password Instructions",
                           recipients=[user.email],
                           body=render_template('email/reset_password.txt', user=user, token=token))
             threaded_email_send(msg)
