@@ -64,16 +64,15 @@ def profile():
 @users.route('/verify/<token>', methods=['GET', 'POST'])
 def verify_email(token):
 
-    if user.is_verified:
-        flash('Your account has already been verified')
-        return redirect(url_for('main.index'))
-
     try:
         user = User.verify_email_token(token)
     except Exception as e:
         alert.error('Error sending email')
 
-
+    else:
+        if user.is_verified:
+            flash('Your account has already been verified')
+            return redirect(url_for('main.index'))
 
     if user:
         user.is_verified = True
