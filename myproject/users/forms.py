@@ -3,14 +3,30 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, EqualTo, Email, Length
 from myproject.users.models import User
+from wtforms import ValidationError
+from myproject import db
+from flask_login import current_user
 
 
 class PreferencesForm(FlaskForm):
 
     username = StringField(validators=[DataRequired(), Length(min=3, max=25)])
-    full_name = StringField("Full name", validators=[DataRequired(), Length(min=3, max=35)])
-    email = StringField(validators=[DataRequired(), Email()])
+    full_name = StringField(
+        "Full name", validators=[DataRequired(),
+                                 Length(min=3, max=35)])
+    email = StringField(validators=[
+        DataRequired(),
+        Email(),
+    ])
     submit_info = SubmitField()
+
+    # def email_exists(self):
+    #     user = User.query.filter_by(email=s).first()
+    @staticmethod
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user and current_user.email != email.data:
+            raise ValidationError('E-mail is already in use.')
 
     @property
     def is_prefilled(self):
@@ -34,18 +50,24 @@ class PreferencesForm(FlaskForm):
 class PasswordForm(FlaskForm):
     current_password = PasswordField(validators=[DataRequired()])
     password = PasswordField(validators=[DataRequired()])
-    password2 = PasswordField('Repeat your password',
-                              validators=[DataRequired(),
-                                          EqualTo('password', message="Passwords do not match")])
+    password2 = PasswordField(
+        'Repeat your password',
+        validators=[
+            DataRequired(),
+            EqualTo('password', message="Passwords do not match")
+        ])
     submit_password = SubmitField()
 
 
 class PasswordResetForm(FlaskForm):
     password = PasswordField(validators=[DataRequired()])
 
-    password2 = PasswordField('Repeat your password',
-                              validators=[DataRequired(),
-                                          EqualTo('password', message="Passwords do not match")])
+    password2 = PasswordField(
+        'Repeat your password',
+        validators=[
+            DataRequired(),
+            EqualTo('password', message="Passwords do not match")
+        ])
 
     submit = SubmitField()
 
@@ -67,7 +89,6 @@ class LoginForm(FlaskForm):
     username = StringField(validators=[DataRequired()])
     password = PasswordField(validators=[DataRequired()])
 
-
     remember_me = BooleanField("Remember me")
 
     submit = SubmitField()
@@ -77,10 +98,15 @@ class RegisterForm(FlaskForm):
 
     username = StringField(validators=[DataRequired(), Length(min=3, max=25)])
     password = PasswordField(validators=[DataRequired(), Length(min=6, max=35)])
-    password2 = PasswordField('Enter your password one more time',
-                              validators=[DataRequired(), Length(min=6, max=35), EqualTo('password')])
+    password2 = PasswordField(
+        'Enter your password one more time',
+        validators=[DataRequired(),
+                    Length(min=6, max=35),
+                    EqualTo('password')])
 
-    full_name = StringField("Full name", validators=[DataRequired(), Length(min=3, max=35)])
+    full_name = StringField(
+        "Full name", validators=[DataRequired(),
+                                 Length(min=3, max=35)])
 
     email = StringField(validators=[DataRequired(), Email()])
     submit = SubmitField()
@@ -96,7 +122,3 @@ class RegisterForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('E-mail is already in use.')
-
-
-
-
