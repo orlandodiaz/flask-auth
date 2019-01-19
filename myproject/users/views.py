@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from myproject.users.forms import (RegisterForm, LoginForm, RequestPasswordResetForm,
-                                   PasswordResetForm, PreferencesForm, PasswordForm)
+from myproject.users.forms import (RegisterForm, LoginForm,
+                                   RequestPasswordResetForm, PasswordResetForm,
+                                   PreferencesForm, PasswordForm)
 from flask_login import login_user, logout_user, login_required
 from myproject import db
 from flask_mail import Message
@@ -11,14 +12,15 @@ from flask_login import current_user
 from myproject import app
 from myproject.users import alert
 from flask import request
+
 users = Blueprint('users', __name__, url_prefix='/users')
-print(f'NAME IS ${__name__}')
 
 
 @users.route('/request_verify_email', methods=['GET', 'POST'])
 def request_verify_email():
     current_user.send_verification_email()
-    alert.info('A verification email has been sent to the email address specified')
+    alert.info(
+        'A verification email has been sent to the email address specified')
     return redirect(url_for('users.preferences'))
 
 
@@ -54,9 +56,9 @@ def preferences():
 
     return render_template('preferences.html', form=form, pw_form=pw_form)
 
+
 @users.route('/profile')
 @login_required
-
 def profile():
     return render_template('profile.html')
 
@@ -110,11 +112,15 @@ def request_password_reset():
         print("user {}".format(user))
         if user:
             token = user.get_reset_password_token()
-            msg = Message("Reset Password Instructions",
-                          recipients=[user.email],
-                          body=render_template('email/reset_password.txt', user=user, token=token))
+            msg = Message(
+                "Reset Password Instructions",
+                recipients=[user.email],
+                body=render_template(
+                    'email/reset_password.txt', user=user, token=token))
             threaded_email_send(msg)
-            alert.info("Email with instructions have been sent to {}. Please check your e-mail.".format(form.email.data))
+            alert.info(
+                "Email with instructions have been sent to {}. Please check your e-mail."
+                .format(form.email.data))
             return redirect(url_for('users.login'))
         else:
             alert.error('An user with that email does not exist')
@@ -125,8 +131,11 @@ def request_password_reset():
 
 @users.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
 
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+
+    form = LoginForm()
 
     if form.validate_on_submit():
         print("Login Form validated")
@@ -141,22 +150,18 @@ def login():
 
                 if request.args.get('next'):
                     return redirect(request.args.get('next'))
-                else:
-                    return redirect(url_for('main.index'))
-            # flash('Incorrect password', category='danger')
+                return redirect(url_for('main.index'))
             alert.error("Incorrect Password")
 
-        else:
-            alert.error('User does not exist')
+        alert.error('User does not exist')
 
-        # return redirect(url_for('main.index'))
+        redirect(url_for('main.index'))
 
-
-    alert.info("Welcome! This is a back-end authentication demo. \n Register an account to begin or you could"
-               " also login with the username demo with password demo123")
+    alert.info(
+        "Welcome! This is a back-end authentication demo. \n Register an account to begin or you could"
+        " also login with the username demo with password demo123")
 
     return render_template("login.html", form=form)
-
 
 
 @users.route('/logout', methods=['GET', 'POST'])
@@ -173,9 +178,10 @@ def register():
 
     if form.validate_on_submit():
 
-        user = User(username=form.username.data,
-                    email=form.email.data,
-                    full_name=form.full_name.data)
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            full_name=form.full_name.data)
 
         user.set_password(form.password.data)
         db.session.add(user)
@@ -183,13 +189,11 @@ def register():
 
         token = user.get_verify_email_token()
 
-
         user.send_verification_email()
 
-        alert.info("A verification email has been sent to {}".format(form.email.data))
+        alert.info("A verification email has been sent to {}".format(
+            form.email.data))
 
         return redirect(url_for('main.index'))
 
     return render_template("register.html", form=form)
-
-
