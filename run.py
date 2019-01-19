@@ -1,6 +1,6 @@
-from myproject import app
-from myproject.users.models import db
-from myproject.users.models import User
+from flaskauth import app
+from flaskauth.users.models import db
+from flaskauth.users.models import User
 
 
 @app.shell_context_processor

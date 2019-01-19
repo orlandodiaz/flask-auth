@@ -1,10 +1,10 @@
 import os
 import unittest
 
-from myproject.users.models import User
+from flaskauth.users.models import User
 from flask_login import current_user
 from flask_testing import TestCase
-from myproject import app, db
+from flaskauth import app, db
 
 
 class TestIndexView(unittest.TestCase):

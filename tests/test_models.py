@@ -1,12 +1,12 @@
-from myproject.users.forms import LoginForm
-from myproject import app, db
+from flaskauth.users.forms import LoginForm
+from flaskauth import app, db
 from log3 import log
 from .test_base import BaseTestCase
 import unittest
-from myproject.users.models import User
+from flaskauth.users.models import User
 
 
-class TestUserModel(unittest.TestCase):
+class TestUserModel(BaseTestCase):
     """ Test User Model """
 
     def setUp(self):
@@ -22,9 +22,9 @@ class TestUserModel(unittest.TestCase):
 
         user = User(
             username="myusername",
-            password="mypassword",
             email="myemail@gmail.com",
             full_name="myname")
+        user.set_password("mypassword")
         db.session.add(user)
         db.session.commit()
 
@@ -35,4 +35,4 @@ class TestUserModel(unittest.TestCase):
         user = User()
         user.set_password("mypassword")
 
-        self.assertNotEquals(user.password, "mypassword")
+        self.assertNotEqual(user.password, "mypassword")

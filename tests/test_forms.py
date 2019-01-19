@@ -1,5 +1,5 @@
-from myproject.users.forms import LoginForm
-from myproject import app, db
+from flaskauth.users.forms import LoginForm
+from flaskauth import app, db
 from log3 import log
 from .test_base import BaseTestCase
 import unittest
@@ -7,12 +7,6 @@ import unittest
 
 class TestLoginForm(unittest.TestCase):
     """ Test Login Form """
-
-    # def setUp(self):
-    #     pass
-
-    #     app.config.from_object('config.TestConfig')
-    # self.app = app.test_client()
 
     def test_login_form_validates(self):
 

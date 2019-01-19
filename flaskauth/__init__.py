@@ -10,7 +10,6 @@ from flask import redirect, request
 
 app = Flask(__name__)
 app.config.from_object(os.environ.get('FLASK_CONFIG_TYPE'))
-# app.config.from_object('config.DevConfig')
 
 mail = Mail(app)
 db = SQLAlchemy(app)
@@ -32,8 +31,8 @@ from .users.models import User
 
 from flask_admin import Admin
 
-from myproject.admin.views import AdminView
-from myproject.admin.views import MyAdminIndexView
+from flaskauth.admin.views import AdminView
+from flaskauth.admin.views import MyAdminIndexView
 
 admin_page = Admin(
     app,
@@ -43,9 +42,9 @@ admin_page = Admin(
 
 admin_page.add_view(AdminView(User, db.session))
 
-from myproject.main.views import main
-from myproject.users.views import users
-from myproject.admin.views import admin1
+from flaskauth.main.views import main
+from flaskauth.users.views import users
+from flaskauth.admin.views import admin1
 
 app.register_blueprint(main)
 app.register_blueprint(users)

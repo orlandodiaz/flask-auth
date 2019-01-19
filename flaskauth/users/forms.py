@@ -2,9 +2,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, EqualTo, Email, Length
-from myproject.users.models import User
+from flaskauth.users.models import User
 from wtforms import ValidationError
-from myproject import db
+from flaskauth import db
 from flask_login import current_user
 
 

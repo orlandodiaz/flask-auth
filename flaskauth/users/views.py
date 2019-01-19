@@ -1,16 +1,16 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
-from myproject.users.forms import (RegisterForm, LoginForm,
+from flaskauth.users.forms import (RegisterForm, LoginForm,
                                    RequestPasswordResetForm, PasswordResetForm,
                                    PreferencesForm, PasswordForm)
 from flask_login import login_user, logout_user, login_required
-from myproject import db
+from flaskauth import db
 from flask_mail import Message
-from myproject import mail
-from myproject.users.models import User
-from myproject.users.email import threaded_email_send
+from flaskauth import mail
+from flaskauth.users.models import User
+from flaskauth.users.email import threaded_email_send
 from flask_login import current_user
-from myproject import app
-from myproject.users import alert
+from flaskauth import app
+from flaskauth.users import alert
 from flask import request
 
 users = Blueprint('users', __name__, url_prefix='/users')
