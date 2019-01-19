@@ -1,0 +1,21 @@
+{% macro render_field(field) %}
+
+    {% if field.errors %}
+        <p>
+
+            {{ field.label(class="w-90") }}
+            {{ field(class="form-control form-control-md border border-danger w-90 d-inline") }}
+
+            <button type="button" class="btn btn-md btn-danger" data-toggle="popover" title=""
+                    data-content="{% for error in field.errors %} {{ error }}&#10;{% endfor %}">?
+            </button>
+        </p>
+
+    {% else %}
+        <p>{{ field.label }} {{ field(class="form-control form-control-md w-90") }}</p>
+    {% endif %}
+
+
+{% endmacro %}
+
+{#{% set active = 'active' %}#}
